@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            (async function () {
+                if ("serviceWorker" in navigator) {
+                    await navigator.serviceWorker.register("/sw.js", { scope: "/" }).then((reg) => {
+                        console.log("Registered ServiceWorker for scope " + reg.scope);
+                    }).catch((e) => {
+                        console.log("ServiceWorker registration failed: " + e);
+                    });
+                }
+            })();
+        </script>
+    </head>
+
+    <body>
+        <span>The contents are: <span id="contents"></span></span>
+
+        <script>
+            fetch("/content.txt").then(res => res.text()).then(text => document.getElementById("contents").innerText = text);
+        </script>
+    </body>
+</html>
